@@ -347,6 +347,8 @@ core/modules/shortcut/images/favstar.svg
 core/modules/shortcut/images/favstar-rtl.svg
 core/modules/shortcut/images/backport-themes/claro/favstar.svg
 core/modules/shortcut/images/backport-themes/claro/favstar-rtl.svg
+core/modules/shortcut/tests/modules/shortcut_test/src/Hook/ShortcutTestHooks.php
+core/modules/shortcut/tests/modules/shortcut_test/shortcut_test.info.yml
 core/modules/shortcut/tests/src/FunctionalJavascript/NavigationBlockUiTest.php
 core/modules/shortcut/tests/src/Functional/ShortcutCacheTagsTest.php
 core/modules/shortcut/tests/src/Functional/ConfigTranslationListUiTest.php
@@ -370,6 +372,7 @@ core/modules/shortcut/tests/src/Functional/Rest/ShortcutJsonAnonTest.php
 core/modules/shortcut/tests/src/Functional/NavigationShortcutsBlockTest.php
 core/modules/shortcut/tests/src/Functional/ShortcutLinksTest.php
 core/modules/shortcut/tests/src/Functional/ShortcutTestBase.php
+core/modules/shortcut/tests/src/Functional/NavigationSafeBlockDefinitionTest.php
 core/modules/shortcut/tests/src/Functional/Jsonapi/ShortcutTest.php
 core/modules/shortcut/tests/src/Functional/Jsonapi/ShortcutSetTest.php
 core/modules/shortcut/tests/src/Functional/TrustedHostsTest.php
@@ -379,10 +382,12 @@ core/modules/shortcut/tests/src/Kernel/ShortcutSetValidationTest.php
 core/modules/shortcut/tests/src/Kernel/ShortcutEntityLinksTest.php
 core/modules/shortcut/tests/src/Kernel/ShortcutClaroIntegrationTest.php
 core/modules/shortcut/shortcut.install
+core/modules/shortcut/src/ShortcutNavigationLazyBuilder.php
 core/modules/shortcut/src/ShortcutSetStorageInterface.php
 core/modules/shortcut/src/ShortcutSetAccessControlHandler.php
 core/modules/shortcut/src/Controller/ShortcutController.php
 core/modules/shortcut/src/Controller/ShortcutSetController.php
+core/modules/shortcut/src/ShortcutServiceProvider.php
 core/modules/shortcut/src/ShortcutAccessControlHandler.php
 core/modules/shortcut/src/ShortcutSetInterface.php
 core/modules/shortcut/src/ShortcutInterface.php
@@ -396,6 +401,7 @@ core/modules/shortcut/src/Entity/ShortcutSet.php
 core/modules/shortcut/src/ShortcutSetListBuilder.php
 core/modules/shortcut/src/ShortcutForm.php
 core/modules/shortcut/src/Plugin/migrate/destination/ShortcutSetUsers.php
+core/modules/shortcut/src/Plugin/Block/ShortcutNavigationBlock.php
 core/modules/shortcut/src/Plugin/Block/ShortcutsBlock.php
 core/modules/shortcut/src/Form/SetCustomize.php
 core/modules/shortcut/src/Form/ShortcutSetDeleteForm.php
@@ -3422,6 +3428,7 @@ core/modules/toolbar/toolbar.routing.yml
 core/modules/toolbar/toolbar.libraries.yml
 core/modules/system/system.api.php
 core/modules/system/system.links.action.yml
+core/modules/system/js/system.admin_compact.js
 core/modules/system/js/system.date.js
 core/modules/system/js/system.modules.js
 core/modules/system/js/system.js
@@ -4992,6 +4999,7 @@ core/modules/system/tests/themes/test_ckeditor_stylesheets_without_5/test_ckedit
 core/modules/system/tests/src/FunctionalJavascript/ThemeSettingsFormTest.php
 core/modules/system/tests/src/FunctionalJavascript/OffCanvasTestBase.php
 core/modules/system/tests/src/FunctionalJavascript/OffCanvasTest.php
+core/modules/system/tests/src/FunctionalJavascript/AdminCompactModeTest.php
 core/modules/system/tests/src/FunctionalJavascript/FrameworkTest.php
 core/modules/system/tests/src/FunctionalJavascript/CopyFieldValueTest.php
 core/modules/system/tests/src/FunctionalJavascript/Block/SystemMenuBlockUiTest.php
@@ -6126,7 +6134,6 @@ core/modules/views/tests/modules/views_test_config/test_views/views.view.test_vi
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_field_field_attachment_test.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_field_output.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_view_status.yml
-core/modules/views/tests/modules/views_test_config/test_views/views.view.test_search.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_aggregate_count_function.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.computed_field_view.yml
 core/modules/views/tests/modules/views_test_config/test_views/views.view.test_taxonomy_glossary.yml
@@ -7687,6 +7694,7 @@ core/modules/pgsql/tests/src/Unit/EntityQuery/ConditionTest.php
 core/modules/pgsql/tests/src/Kernel/pgsql/SchemaUniquePrefixedKeysIndexTest.php
 core/modules/pgsql/tests/src/Kernel/pgsql/ConnectionUnitTest.php
 core/modules/pgsql/tests/src/Kernel/pgsql/DatabaseExceptionWrapperTest.php
+core/modules/pgsql/tests/src/Kernel/pgsql/TruncateTest.php
 core/modules/pgsql/tests/src/Kernel/pgsql/SchemaTest.php
 core/modules/pgsql/tests/src/Kernel/pgsql/KernelTestBaseTest.php
 core/modules/pgsql/tests/src/Kernel/pgsql/TransactionTest.php
@@ -8376,6 +8384,7 @@ core/modules/navigation/navigation.icons.yml
 core/modules/navigation/navigation.links.menu.yml
 core/modules/navigation/navigation.libraries.yml
 core/modules/navigation/navigation.permissions.yml
+core/modules/navigation/tests/fixtures/navigation_post_update.php
 core/modules/navigation/tests/navigation_test_block/navigation_test_block.info.yml
 core/modules/navigation/tests/navigation_test_block/src/Hook/NavigationTestBlockHooks.php
 core/modules/navigation/tests/navigation_test_block/src/Plugin/Block/NavigationTestBlock.php
@@ -8389,6 +8398,7 @@ core/modules/navigation/tests/src/FunctionalJavascript/NavigationBlockUiTest.php
 core/modules/navigation/tests/src/FunctionalJavascript/NavigationUserBlockTest.php
 core/modules/navigation/tests/src/Functional/NavigationLogoTest.php
 core/modules/navigation/tests/src/Functional/GenericTest.php
+core/modules/navigation/tests/src/Functional/Update/NavigationUpdateTest.php
 core/modules/navigation/tests/src/Functional/NavigationTopBarPageContextTest.php
 core/modules/navigation/tests/src/Functional/NavigationContentTopTest.php
 core/modules/navigation/tests/src/Functional/NavigationDefaultBlockDefinitionTest.php
@@ -8433,7 +8443,6 @@ core/modules/navigation/src/TopBarItemBase.php
 core/modules/navigation/src/EntityRouteHelper.php
 core/modules/navigation/src/Hook/NavigationThemeHooks.php
 core/modules/navigation/src/Hook/NavigationHooks.php
-core/modules/navigation/src/ShortcutLazyBuilder.php
 core/modules/navigation/src/WorkspacesLazyBuilder.php
 core/modules/navigation/src/NavigationServiceProvider.php
 core/modules/navigation/src/Menu/NavigationMenuLinkTreeManipulators.php
@@ -9289,6 +9298,7 @@ core/modules/options/tests/src/Kernel/Views/OptionsListFilterTest.php
 core/modules/options/tests/src/Kernel/Views/ViewsDataTest.php
 core/modules/options/tests/src/Kernel/Views/OptionsListArgumentTest.php
 core/modules/options/tests/src/Kernel/OptionsDynamicValuesApiTest.php
+core/modules/options/tests/src/Kernel/OptionsAllowedValuesTest.php
 core/modules/options/tests/src/Kernel/OptionsDynamicValuesValidationTest.php
 core/modules/options/tests/src/Kernel/OptionsWidgetBaseTest.php
 core/modules/options/tests/src/Kernel/OptionsFormattersTest.php
@@ -9308,6 +9318,8 @@ core/modules/options/tests/options_config_install_test/options_config_install_te
 core/modules/options/options.services.yml
 core/modules/options/options.info.yml
 core/modules/options/options.api.php
+core/modules/options/src/OptionsAllowedValuesInterface.php
+core/modules/options/src/OptionsAllowedValues.php
 core/modules/options/src/Hook/OptionsHooks.php
 core/modules/options/src/Hook/OptionsViewsHooks.php
 core/modules/options/src/Plugin/Field/FieldType/ListFloatItem.php
@@ -9481,6 +9493,7 @@ core/modules/search/modules/search_node/src/Hook/SearchNodeHooks.php
 core/modules/search/modules/search_node/src/Hook/NodeSearchHooks.php
 core/modules/search/modules/search_node/src/Hook/SearchNodeViewsHooks.php
 core/modules/search/modules/search_node/src/Plugin/Search/SearchNode.php
+core/modules/search/modules/search_node/search_node.api.php
 core/modules/search/modules/search_node/search_node.info.yml
 core/modules/search/modules/search_help/search_help.install
 core/modules/search/modules/search_help/config/schema/search_help.schema.yml
@@ -9518,6 +9531,8 @@ core/modules/search/tests/modules/search_extra_type/config/install/search.page.d
 core/modules/search/tests/modules/search_extra_type/config/schema/search_extra_type.schema.yml
 core/modules/search/tests/modules/search_extra_type/search_extra_type.info.yml
 core/modules/search/tests/modules/search_extra_type/src/Plugin/Search/SearchExtraTypeSearch.php
+core/modules/search/tests/modules/search_test_views/search_test_views.info.yml
+core/modules/search/tests/modules/search_test_views/test_views/views.view.test_search.yml
 core/modules/search/tests/UnicodeTest.txt
 core/modules/search/tests/src/Nightwatch/Tests/Olivero/oliveroSearchFormTest.js
 core/modules/search/tests/src/Nightwatch/Tests/Olivero/TestSiteOliveroInstallTestScript.php
@@ -9983,6 +9998,7 @@ core/themes/default_admin/images/icons/545560/pager-first.svg
 core/themes/default_admin/images/icons/545560/pager-prev.svg
 core/themes/default_admin/images/icons/545560/questionmark.svg
 core/themes/default_admin/tests/src/Functional/AdminTest.php
+core/themes/default_admin/tests/src/Kernel/BreadcrumbPreprocessTest.php
 core/themes/default_admin/migration/js/messages.js
 core/themes/default_admin/migration/js/init.js
 core/themes/default_admin/migration/js/more_actions.js
